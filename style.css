@@ -1,6 +1,8 @@
 * {
     font-family:'Times New Roman', Times, serif;
     font-size: 1rem;
+    background-color: #111;
+    color: white;
 }
 
 a {
@@ -19,6 +21,7 @@ a:hover, a:active {
     height: 30rem;
     border-radius: 3em;
     margin: 2em auto;
+    overflow: hidden;
 }
 
 .screen-width {
@@ -33,6 +36,7 @@ a:hover, a:active {
     min-height: 5em;
     border: 1px white solid;
     border-radius: 1.13em;
+    background-color: #333;
 
     /* Styles the text that will be input */
     text-align: right;
