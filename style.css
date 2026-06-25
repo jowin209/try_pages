@@ -1,3 +1,8 @@
+* {
+    font-family:'Times New Roman', Times, serif;
+    font-size: 1rem;
+}
+
 a {
     text-decoration: none;
     color: #ffff;
@@ -6,4 +11,29 @@ a {
 a:hover, a:active {
     color: #39ff14;
     text-decoration: underline;
+}
+
+#calculator {
+    border: 1px white solid;
+    width: 24rem;
+    height: 30rem;
+    border-radius: 3em;
+}
+
+.screen-width {
+    width: 100%;
+}
+
+.screen {
+    /* Centers the screen and leave some margins */
+    display: block;
+    width: 85%;
+    margin: 2em auto;
+    min-height: 5em;
+    border: 1px white solid;
+    border-radius: 1.13em;
+
+    /* Styles the text that will be input */
+    text-align: right;
+    font-size: 1em;
 }
