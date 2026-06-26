@@ -154,8 +154,10 @@ const use_operator = (number) => {
     }
     else { 
         if (IS_RECENT) {
-            screen.value = values.x;
-            values.y = null;
+            if (!IS_EQUAL) {
+                screen.value = values.x;
+                values.y = null;
+            }
         }
         else {
             values.y = number;
@@ -168,5 +170,8 @@ const use_operator = (number) => {
 
         // Make the values reusable
         values.x = Number(screen.value);
+    }
+    else if (values.x != null && values.y == null) {
+        screen.value = values.x;
     }
 }
