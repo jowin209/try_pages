@@ -55,6 +55,43 @@ for (const button of buttons) {
     })
 }
 
+document.addEventListener('keydown', (event) => {
+    const current_number = Number(screen.value);
+    const key_pressed = event.key;
+
+    if (!isNaN(key_pressed)) {
+        if (IS_EQUAL) {
+            clear_memory();
+        }
+        else {
+            append_number(key_pressed);
+            IS_RECENT = false;
+            IS_EQUAL = false;
+        }
+    }
+    else if (key_pressed == "Backspace") {
+        screen.value = String(screen.value).slice(0, -1);
+    } else if (event.ctrlKey && key_pressed.toLowerCase() === "c") {
+        clear_memory();
+        screen.value = "";
+        IS_RECENT = false;
+        IS_EQUAL = false;
+    }
+    else if (key_pressed in valid_operators) {
+        const operator = valid_operators[key_pressed];
+        values.operation = operator;
+
+        use_operator(current_number);
+        IS_RECENT = true;
+        IS_EQUAL = false;
+    }
+    else if (key_pressed == "=" || key_pressed == "Enter") {
+        use_operator(current_number);
+        IS_RECENT = true;
+        IS_EQUAL = true;
+    }
+})
+
 // Remove later
 const _debug = () => {
     console.log(`x: ${values.x}\ny: ${values.y}\noperator: ${values.operation}`)
