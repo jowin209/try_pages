@@ -69,7 +69,7 @@ document.addEventListener('keydown', (event) => {
             IS_EQUAL = false;
         }
     }
-    else if (key_pressed == "Backspace") {
+    else if (key_pressed === "Backspace") {
         if (event.ctrlKey) {
             screen.value = "";
         }
@@ -90,7 +90,7 @@ document.addEventListener('keydown', (event) => {
         IS_RECENT = true;
         IS_EQUAL = false;
     }
-    else if (key_pressed == "=" || key_pressed == "Enter") {
+    else if (key_pressed === "=" || key_pressed === "Enter") {
         use_operator(current_number);
         IS_RECENT = true;
         IS_EQUAL = true;
