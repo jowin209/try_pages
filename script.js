@@ -70,7 +70,12 @@ document.addEventListener('keydown', (event) => {
         }
     }
     else if (key_pressed == "Backspace") {
-        screen.value = String(screen.value).slice(0, -1);
+        if (event.ctrlKey) {
+            screen.value = "";
+        }
+        else {
+            screen.value = String(screen.value).slice(0, -1);
+        }
     } else if (event.ctrlKey && key_pressed.toLowerCase() === "c") {
         clear_memory();
         screen.value = "";
