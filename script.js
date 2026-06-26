@@ -4,7 +4,7 @@ const screen = document.getElementById("screen");
 const values = {
     x : null,
     y : null,
-    operation : "add"
+    operation : null
 }
 
 const valid_operators = {
@@ -14,45 +14,53 @@ const valid_operators = {
     "/" : "divide"
 }
 
+// Signals if an operator button was just recently clicked
+let IS_RECENT = false;
+
+// Signals whether the equal sign has been pressed or not
+let IS_EQUAL = false;
+
 for (const button of buttons) {
     button.addEventListener('click', () => {
         const current_number = Number(screen.value);
+        const button_pressed = button.innerText;
 
-        // Add all number input to be shown on the screen
-        if (!isNaN(button.innerText)){
-            screen.value += button.innerText;
-        } 
-        // Clear the values and the screen when 'CE' is clicked
-        else if (button.innerText === "CE") {
+        if (!isNaN(button_pressed)){
+            if (IS_EQUAL) {
+                clear_memory();
+            }
+            append_number(button_pressed);
+            IS_RECENT = false;
+            IS_EQUAL = false;
+        }
+        else if (button_pressed === "CE") {
+            clear_memory();
             screen.value = "";
-            values.x = null;
-            values.y = null;
-            values.operation = "add";
-        } 
-        // Check if the button clicked is a valid operator (+, -, *, /)
-        else if (button.innerText in valid_operators){
-            const operator = valid_operators[button.innerText];
+            IS_RECENT = false;
+            IS_EQUAL = false;
+        }
+        else if (button_pressed in valid_operators){
+            const operator = valid_operators[button_pressed];
+            values.operation = operator;
 
-            // TODO: Fix from here
-            if (values.x === null && values.y === null) {
-                values.x = current_number;
-                values.operation = operator;
-                screen.value = "";
-            } else if (values.y === null) {
-                values.y = current_number;
-                values.operation = operator;
-                screen.value = get_answer(current_number);
-            } 
-            _debug(button); // Remove later
+            use_operator(current_number);
+            IS_RECENT = true;
+            IS_EQUAL = false;
         } 
+        else if (button_pressed === "=") {
+            use_operator(current_number);
+            IS_RECENT = true;
+            IS_EQUAL = true;
+        }
     })
 }
 
-const _debug = (button) => {
+// Remove later
+const _debug = () => {
     console.log(`x: ${values.x}\ny: ${values.y}\noperator: ${values.operation}`)
 }
 
-const get_answer = (current) => {
+const get_answer = () => {
     let answer;
 
     switch (values.operation) {
@@ -73,5 +81,49 @@ const get_answer = (current) => {
             alert("Invalid operation!");
     }
 
-    return values.y;
+    return answer;
+}
+
+// Append number to the screen
+const append_number = (key_input) => {
+    if (IS_RECENT) {
+        screen.value = "";
+    }
+
+    if (!isNaN(key_input)) {
+        screen.value += key_input;
+    }
+}
+
+// Clear the numbers on the screen
+const clear_memory = () => {
+    values.x = null;
+    values.y = null;
+    values.operation = null;
+}
+
+// Compute or add the operator on the computation
+const use_operator = (number) => {
+    number = Number(number);
+
+    if (values.x === null) {
+        values.x = number;
+        screen.value = "";
+    }
+    else { 
+        if (IS_RECENT) {
+            values.y = values.y;
+        }
+        else {
+            values.y = number;
+        }
+    }
+    
+
+    if (values.x != null && values.y != null) {
+        screen.value = get_answer();
+
+        // Make the values reusable
+        values.x = Number(screen.value);
+    }
 }
