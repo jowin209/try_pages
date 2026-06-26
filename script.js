@@ -154,7 +154,8 @@ const use_operator = (number) => {
     }
     else { 
         if (IS_RECENT) {
-            values.y = values.y;
+            screen.value = values.x;
+            values.y = null;
         }
         else {
             values.y = number;
